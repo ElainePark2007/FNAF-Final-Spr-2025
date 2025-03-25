@@ -8,5 +8,9 @@ void printName()
 int main()
 {
     std::cout << "Hello, World!\n";
+
     printName();
+
+  std::cout<<"I am Luke\n";
+    return 0;
 }
