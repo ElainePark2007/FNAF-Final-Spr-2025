@@ -1,6 +1,10 @@
 #ifndef ANIMATRONIC_H
 #define ANIMATRONIC_H
 #include <iostream>
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono;
 
 class Animatronic {
 
@@ -16,12 +20,13 @@ public:
     void movementOpportunity(int ai);
     void moveRooms();
 
-
+    void timer();
+    void timerLength(int wait);
 
 private:
     int mAiLevel;
     std::string mLocation;
-
+    int mWait;
 
     
 };
