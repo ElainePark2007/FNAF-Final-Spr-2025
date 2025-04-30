@@ -1,7 +1,7 @@
 {
     "files.associations": {
 
-        "chrono": "cpp"
+        "chrono": "cpp",
         "ctime": "cpp"
     }
 }

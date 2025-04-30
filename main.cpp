@@ -30,13 +30,13 @@ int main()
         }
 
         //Main Game Loop
-        while(!gameOver)
-        {
-             /*Create timer that removes a power every 6 seconds (passive power drain that starts on night 2, 
-            but since we are only doing one night, we can just have it on the first night))*/
+        // while(!gameOver)
+        // {
+        //      /*Create timer that removes a power every 6 seconds (passive power drain that starts on night 2, 
+        //     but since we are only doing one night, we can just have it on the first night))*/
 
-            /*Every five seconds, call *insert animatronic name*.movementOpportunity(*animatronic name*.getAiLevel()*/
-        }
+        //     /*Every five seconds, call *insert animatronic name*.movementOpportunity(*animatronic name*.getAiLevel()*/
+        // }
 
         window.clear();
         window.display();
