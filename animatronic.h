@@ -6,18 +6,21 @@
 
 using namespace std::chrono;
 
+
+
+
 class Animatronic {
 
 public:
     Animatronic(int ai);
-    int getAiLevel();
-    std::string getLocation();
+    int const getAiLevel();
+    std::string const getLocation();
 
     void setAiLevel(int ai);
     void setLocation(std::string location);
 
     void aiIncrease();
-    void movementOpportunity(int ai);
+    void movementOpportunity();
     void moveRooms();
 
     void timer();

@@ -5,12 +5,12 @@ Animatronic::Animatronic(int ai)
     mAiLevel=ai;
 }
 
-int Animatronic::getAiLevel()
+int const Animatronic::getAiLevel()
 {
     return mAiLevel;
 }
 
-std::string Animatronic::getLocation()
+std::string const Animatronic::getLocation()
 {
     return mLocation;
 }
@@ -30,8 +30,17 @@ void Animatronic::aiIncrease()
     mAiLevel++; //Increases depending on time of night
 }
 
-void Animatronic::movementOpportunity(int ai)
+/**
+ * @brief Decides if animatronic should move based on random numbers
+ * 
+ */
+void Animatronic::movementOpportunity()
 {
+    int movement=rand()%20+1;
+    std::cout<<movement<<std::endl;
+    if(movement<=mAiLevel) {
+        moveRooms();
+    }
     //Gives animatronic the opportuntiy to move
     //Calls moveRooms() if true
 }
