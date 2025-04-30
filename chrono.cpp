@@ -29,7 +29,7 @@ public:
     int mWait;
 };
 
-int main ()
+int chronoMain ()
 {
     Enemy monster;
     monster.mWait = 20;
