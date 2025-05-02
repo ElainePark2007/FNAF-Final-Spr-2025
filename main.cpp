@@ -16,6 +16,7 @@ int main()
 
     bool gameOver=false;
     
+    
    
     sf::RenderWindow window(sf::VideoMode(800, 500), "MyButton!");
     sf::Texture texture;
