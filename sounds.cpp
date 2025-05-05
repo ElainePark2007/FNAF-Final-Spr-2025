@@ -1,5 +1,5 @@
 #include "sounds.h"
-//g++ -std=c++11 sounds.cpp -o sfml-app -lsfml-graphics -lsfml-window -lsfml-system -I/usr/local/opt/sfml@2/include -L/usr/local/opt/sfml@2/lib
+//g++ -std=c++11 main.cpp sounds.cpp -o sfml-app -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system -I/usr/local/opt/sfml@2/include -L/usr/local/opt/sfml@2/lib
 Sound::Sound()
 {
 }
@@ -8,7 +8,7 @@ Sound::~Sound()
 }
 bool Sound::loadSound(const std::string &soundName)
 {
-    if (!buffer.loadFromFile(file))
+    if (!buffer.loadFromFile(soundName))
     {
        return false;
     }
