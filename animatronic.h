@@ -1,8 +1,11 @@
 #ifndef ANIMATRONIC_H
 #define ANIMATRONIC_H
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono;
+
 
 
 
@@ -20,12 +23,13 @@ public:
     void movementOpportunity();
     void moveRooms();
 
-
+    void timer();
+    void timerLength(int wait);
 
 private:
     int mAiLevel;
     std::string mLocation;
-
+    int mWait;
 
     
 };
