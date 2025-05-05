@@ -17,7 +17,8 @@ public:
     void timer()
     {
         auto start = steady_clock::now();
-        auto one_second = 1s;
+        auto one_second = 1//s;
+        ;
         for (int i = 0; i < mWait; i++)
         {
             std::this_thread::sleep_for(one_second);
