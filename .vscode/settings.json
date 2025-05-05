@@ -48,9 +48,8 @@
         "variant": "cpp",
         "vector": "cpp",
         "charconv": "cpp",
-        "forward_list": "cpp"
-        "chrono": "cpp"
-        "ctime": "cpp"
+        "forward_list": "cpp",
+        "chrono": "cpp",
 
     }
 }
