@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "animatronic.h"
 #include "sounds.h"
@@ -6,13 +7,12 @@
 int main()
 {
     std::srand(std::time(NULL));
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
 
     int power=999;
-    Animatronic freddy(1);
-    Animatronic bonnie(3);
-    Animatronic chica(3);
-    Animatronic foxy(2);
+    //Animatronic freddy(1);
+    //Animatronic bonnie(3);
+    //Animatronic chica(3);
+    //Animatronic foxy(2);
 
     bool gameOver=false;
     
@@ -24,11 +24,6 @@ int main()
         std::cout<<"Error opening file\n";
         exit(1);
     }
-    std::string l = "pigeons-flying-6351.mp3";
-    sf::SoundBuffer buffer;
-                if (!buffer.loadFromFile(l))
-                    {return -1;}
-                sf::Sound sound(buffer);
     
     //create sprite that look like a button
     sf::Sprite button(texture);
@@ -100,7 +95,6 @@ int main()
                     if(mouseInButton)
                     {
                         button.setRotation(180);
-                        sound.play();
                     }
                     else
                     {
@@ -132,10 +126,9 @@ int main()
         window.draw(text);
         window.display();
     }
+    Sound sound;
+    sound.loadSound("pigeons-flying-6351.mp3");
+    sound.playSound();
     return 0;
 
-
-
-    
-    return 0;
 }
