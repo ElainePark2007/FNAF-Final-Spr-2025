@@ -3,6 +3,8 @@
 #include <iostream>
 #include "animatronic.h"
 #include "sounds.h"
+#include "room.h"
+#include "button.h"
 
 int main()
 {
@@ -17,6 +19,56 @@ int main()
     bool gameOver=false;
     
     
+
+    sf::Texture cameraTexture;
+    cameraTexture.loadFromFile("cameraUI2.png");
+    sf::Sprite cameraMenu;
+    cameraMenu.setTexture(cameraTexture);
+    cameraMenu.setPosition(1150, 345);
+
+    std::vector<Room> allRooms;
+    std::vector<Button> cameraButtons;
+
+    Room room1("rooms/showStage.png", "Show Stage", 7, 1);
+    Room room2("rooms/diningArea.png", "Dining Area", 1, 2);
+    Room room3("rooms/backstage.png", "Backstage", 1, 4);
+    Room room4("rooms/pirate'sCove.png", "Pirate's Cove", 4, 2);
+    Room room5("rooms/supplyCloset.png", "Supply Closet", 1, 2);
+    Room room6("rooms/westHallA.png", "West Hall A", 1, 2);
+    Room room7("rooms/westHallB.png", "West Hall B", 1, 6);
+    Room room8("rooms/restrooms.png", "Restrooms", 1, 3);
+    Room room9("rooms/eastHall.png", "East Hall A", 1, 6);
+    Room room10("rooms/eastHall.png", "East Hall B", 7, 15);
+
+    allRooms.push_back(room1);
+    allRooms.push_back(room2);
+    allRooms.push_back(room3);
+    allRooms.push_back(room4);
+    allRooms.push_back(room5);
+    allRooms.push_back(room6);
+    allRooms.push_back(room7);
+    allRooms.push_back(room8);
+    allRooms.push_back(room9);
+    allRooms.push_back(room10);
+   
+
+    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 357), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1276, 413), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1170, 440), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1244, 491), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1212, 589), sf::Vector2f(53, 32), sf::Color::Transparent));
+
+    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 607), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 647), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1508, 441), sf::Vector2f(53, 32), sf::Color::Transparent));
+    //kitchen stuff
+    cameraButtons.push_back(Button ("", sf::Vector2f(1402, 608), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1402, 648), sf::Vector2f(53, 32), sf::Color::Transparent));
+
+    bool cameraOpen=true;
+    bool mouseInButton;
+    int currentRoom=0;
+
    
     sf::RenderWindow window(sf::VideoMode(800, 500), "MyButton!");
     sf::Texture texture;
@@ -122,7 +174,37 @@ int main()
             }
         }
 
+
+        sf::Vector2i mPos = sf::Mouse::getPosition(window);
+        sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
+
+        for(int i=0; i<10; i++)
+        {
+            if(event.type==sf::Event::MouseButtonPressed) {
+                mouseInButton =    mousePosition.x >= cameraButtons[i].getPosition().x - cameraButtons[i].getDimensions().x
+                && mousePosition.x <= cameraButtons[i].getPosition().x + cameraButtons[i].getDimensions().x
+                && mousePosition.y >= cameraButtons[i].getPosition().y - cameraButtons[i].getDimensions().y
+                && mousePosition.y <= cameraButtons[i].getPosition().y + cameraButtons[i].getDimensions().y;
+            
+                if(mouseInButton) {
+                    currentRoom=i;
+                }
+            }
+        }
+
         window.clear();
+
+
+        
+        
+        if(cameraOpen) {
+            window.draw(allRooms[currentRoom].getRoomPicture());
+            window.draw(cameraMenu);
+            for(int i=0; i<10; i++)
+            {
+                window.draw(cameraButtons[i]);
+            }
+        }
         window.draw(button);
         window.draw(text);
         window.display();
