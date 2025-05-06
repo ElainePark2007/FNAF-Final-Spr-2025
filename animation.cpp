@@ -1,6 +1,18 @@
+/**
+ * @file animation.cpp
+ * @author Matteo Coppola
+ * @brief Animation class definition file
+ * @date 2025-05-05
+ */
 #include "animation.h"
 
-Animation::Animation(std::string animationFile)
+/**
+ * @brief Construct a new Animation:: Animation object
+ * 
+ * @param animationFile Name of png with animation
+ * @param frameCount Number of frames in png
+ */
+Animation::Animation(std::string animationFile, int frameCount)
 {
     if(!mAnimationTexture.loadFromFile(animationFile)) {
         std::cerr<<"Error opening texture\n";
@@ -10,19 +22,28 @@ Animation::Animation(std::string animationFile)
     height=720;
     width=1600;
     offset=2;
-    numFrames=16;
+    numFrames=frameCount;
     currentFrame=1;
 }
 
+/**
+ * @brief Updates object with current frame
+ * 
+ */
 void Animation::runAnimation()
 {
     if(mClock.getElapsedTime().asMilliseconds()>30) {
-        mAnimatronic.setTextureRect(sf::IntRect(0, height*(currentFrame)+(offset*currentFrame), width, height));
+        mAnimatronic.setTextureRect(sf::IntRect(0, 2*(currentFrame+1)+height*currentFrame, width, height));
         currentFrame=(currentFrame+1)%numFrames;
         mClock.restart();
     }
 }
 
+/**
+ * @brief Returns current state of sprite (used for actually printing to window)
+ * 
+ * @return sf::Sprite Current state of sprite
+ */
 sf::Sprite Animation::getSprite()
 {
     return mAnimatronic;

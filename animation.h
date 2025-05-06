@@ -1,3 +1,9 @@
+/**
+ * @file animation.h
+ * @author Matteo Coppola
+ * @brief Animation class declaration file
+ * @date 2025-05-05
+ */
 #ifndef ANIMATION_H
 #define ANIMATION_H
 #include <iostream>
@@ -7,7 +13,7 @@
 class Animation {
 
 public:
-    Animation(std::string animationFile);
+    Animation(std::string animationFile, int frameCount);
     void runAnimation();
     sf::Sprite getSprite();
 
