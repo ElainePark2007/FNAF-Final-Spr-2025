@@ -11,8 +11,9 @@
  * 
  * @param animationFile Name of png with animation
  * @param frameCount Number of frames in png
+ * @param frameWidth Width of each frame
  */
-Animation::Animation(std::string animationFile, int frameCount)
+Animation::Animation(std::string animationFile, int frameCount, int frameWidth)
 {
     if(!mAnimationTexture.loadFromFile(animationFile)) {
         std::cerr<<"Error opening texture\n";
@@ -20,7 +21,7 @@ Animation::Animation(std::string animationFile, int frameCount)
     }
     mAnimatronic.setTexture(mAnimationTexture);
     height=720;
-    width=1600;
+    width=frameWidth;
     offset=2;
     numFrames=frameCount;
     currentFrame=1;

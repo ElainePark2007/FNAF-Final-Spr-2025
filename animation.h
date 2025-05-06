@@ -13,7 +13,7 @@
 class Animation {
 
 public:
-    Animation(std::string animationFile, int frameCount);
+    Animation(std::string animationFile, int frameCount, int frameWidth);
     void runAnimation();
     sf::Sprite getSprite();
 
