@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include "animatronic.h"
+#include "animation.h"
 #include "sounds.h"
 #include "room.h"
 #include "button.h"
@@ -52,25 +53,25 @@ int main()
     allRooms.push_back(room10);
    
 
-    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 357), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1276, 413), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1170, 440), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1244, 491), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1212, 589), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1323, 373), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1303, 429), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1197, 456), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1271, 507), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1239, 605), sf::Vector2f(53, 32), sf::Color::Transparent));
 
-    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 607), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1296, 647), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1508, 441), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1323, 623), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1323, 663), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1535, 457), sf::Vector2f(53, 32), sf::Color::Transparent));
     //kitchen stuff
-    cameraButtons.push_back(Button ("", sf::Vector2f(1402, 608), sf::Vector2f(53, 32), sf::Color::Transparent));
-    cameraButtons.push_back(Button ("", sf::Vector2f(1402, 648), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1429, 624), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1429, 664), sf::Vector2f(53, 32), sf::Color::Transparent));
 
     bool cameraOpen=true;
     bool mouseInButton;
     int currentRoom=0;
 
    
-    sf::RenderWindow window(sf::VideoMode(800, 500), "MyButton!");
+    sf::RenderWindow window(sf::VideoMode(1600, 720), "MyButton!");
     sf::Texture texture;
     if (!texture.loadFromFile("button.png"))
     {
