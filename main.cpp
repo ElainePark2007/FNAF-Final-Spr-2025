@@ -78,6 +78,49 @@ int main()
         std::cout<<"Error opening file\n";
         exit(1);
     }
+    //set initial call and ambience to follow
+    sf::Music music;
+    if (!music.openFromFile("musicFiles/Eerie ambience largesca.mp3"))
+    {
+    }
+    sf::Music call;
+    if (!call.openFromFile("musicFiles/Voiceover1c.mp3"))
+    {
+    }
+
+    // Change some parameters
+    music.setPosition(0, 1, 10); // change its 3D position
+    music.setVolume(100);         // reduce the volume
+    //music.setLoop(true);         // make it loop
+    call.setPosition(0, 1, 10); // change its 3D position
+    call.setVolume(70); 
+    // Play it
+    //call.play();
+    // if (call.getStatus()==sf::Music::Status::Stopped)
+    // {
+        // music.play();
+    //}
+    //create sound objects
+    Sound camOff;
+    Sound windowScare;
+    Sound knock;
+    Sound camSwitch;
+    Sound scareOne;
+    Sound scareTwo;
+    Sound camOn;
+    Sound fan;
+    //load sounds
+    camOff.loadSound("soundFiles/Put Down.mp3");
+    windowScare.loadSound("soundFiles/Windowscare.mp3");
+    knock.loadSound("soundFiles/Knock2.mp3");
+    camSwitch.loadSound("soundFiles/Blip3.mp3");
+    scareOne.loadSound("soundFiles/Xscream.mp3");
+    scareTwo.loadSound("soundFiles/Xscream2.mp3");
+    camOn.loadSound("soundFiles/Camera Video Load.mp3");
+    fan.loadSound("soundFiles/Buzz Fan Florescent2.mp3");
+    fan.volume(5);
+    fan.loop();
+    fan.playSound();
     
     //create sprite that look like a button
     sf::Sprite button(texture);
@@ -210,9 +253,6 @@ int main()
         window.draw(text);
         window.display();
     }
-    Sound sound;
-    sound.loadSound("pigeons-flying-6351.mp3");
-    sound.playSound();
     return 0;
 
 }
