@@ -1,5 +1,7 @@
 {
     "files.associations": {
+
+        "chrono": "cpp",
         "ctime": "cpp",
         "__bit_reference": "cpp",
         "__hash_table": "cpp",
@@ -49,8 +51,6 @@
         "vector": "cpp",
         "charconv": "cpp",
         "forward_list": "cpp"
-        "chrono": "cpp"
-        "ctime": "cpp"
 
     }
 }
