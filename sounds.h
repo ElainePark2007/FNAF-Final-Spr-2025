@@ -8,9 +8,11 @@ class Sound
 public:
     Sound();
     ~Sound();
-    bool loadSound(const std::string &soundName);
+    bool loadSound(const std::string &file);
     void playSound();
-
+    void volume(int v);
+    void loop();
+    void stopSound();
 
 private:
     sf::Sound sound;
