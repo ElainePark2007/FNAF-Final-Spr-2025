@@ -231,6 +231,18 @@ int main()
                         if(i==3) {
                             foxyClock.restart();
                         }
+                        if(chica.getLocation()==&allRooms[9] && i==9) {
+                            chicaOffice=false;
+                            chica.setLocation(allRooms[7]);
+                        }
+                        if(bonnie.getLocation()==&allRooms[6] && i==6) {
+                            bonnieOffice=false;
+                            bonnie.setLocation(allRooms[0]);
+                        }
+                        if(freddy.getLocation()==&allRooms[6] && i==6) {
+                            freddyOffice=false;
+                            freddy.setLocation(allRooms[0]);
+                        }
                         camSwitch.playSound();
                         mouseInButton=false;
                     }
