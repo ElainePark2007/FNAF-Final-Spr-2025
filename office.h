@@ -6,6 +6,8 @@ class Office{
 public:
     Office(std::string textureName, std::string name, int defaultFrame);
     sf::Sprite getRoomPicture();
+    void turnLeftLightOn();
+    void turnRightLightOn();
 
 
 private:
@@ -14,6 +16,7 @@ private:
     sf::Texture rightLightOn;
     sf::Sprite mStateShown;
     std::string mRoomName;
+    bool leftLight, rightLight;
 
 
 

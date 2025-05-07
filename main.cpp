@@ -45,6 +45,7 @@ int main()
     Room room8("rooms/restrooms.png", "Restrooms", 1, 3);
     Room room9("rooms/eastHall.png", "East Hall A", 1, 6);
     Room room10("rooms/eastHall.png", "East Hall B", 7, 15);
+    Room room11("rooms/kitchen.png", "Kitchen", 1, 1);
 
     Office office("rooms/theOffice.png", "The Office", 1);
 
@@ -58,6 +59,8 @@ int main()
     allRooms.push_back(room8);
     allRooms.push_back(room9);
     allRooms.push_back(room10);
+    allRooms.push_back(room11);
+
    
 
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 373), sf::Vector2f(53, 32), sf::Color::Transparent));
@@ -72,6 +75,8 @@ int main()
     //kitchen stuff
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 624), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 664), sf::Vector2f(53, 32), sf::Color::Transparent));
+    cameraButtons.push_back(Button ("", sf::Vector2f(1526, 588), sf::Vector2f(53, 32), sf::Color::Transparent));
+    
 
     bool cameraOpen=false;
     bool mouseInButton;
@@ -242,12 +247,12 @@ int main()
         if(cameraOpen) {
             window.draw(allRooms[currentRoom].getRoomPicture());
             window.draw(cameraMenu);
-            for(int i=0; i<10; i++)
+            for(int i=0; i<11; i++)
             {
                 window.draw(cameraButtons[i]);
             }
 
-            for(int i=0; i<10; i++)
+            for(int i=0; i<11; i++)
             {
                 if(event.type==sf::Event::MouseButtonPressed) {
                     mouseInButton =    mousePosition.x >= cameraButtons[i].getPosition().x - cameraButtons[i].getDimensions().x
