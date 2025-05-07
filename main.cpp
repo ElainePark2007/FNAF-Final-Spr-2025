@@ -14,10 +14,6 @@ int main()
     std::srand(std::time(NULL));
 
     int power=999;
-    //Animatronic freddy(1);
-    //Animatronic bonnie(3);
-    //Animatronic chica(3);
-    //Animatronic foxy(2);
     bool bonnieScareTriggered = false, foxyScareTriggered=false, chicaScareTriggered=false, freddyScareTriggered=false;
     bool bonnieOffice=false, foxyOffice=false, chicaOffice=false, freddyOffice=false;
     bool jumpscare = false;
@@ -158,49 +154,12 @@ int main()
 
     sf::Texture intro;
     sf::Sprite introSprite;
-    if(!intro.loadFromFile("introStuff.png", sf::IntRect(0, 2892, 1600, 720))) {
+    if(!intro.loadFromFile("introStuff.png", sf::IntRect(0, 2890, 1600, 720))) {
         std::cerr<<"Error loading intro texture\n";
         exit(1);
     }
     introSprite.setTexture(intro);
     
-    
-    // //create sprite that look like a button
-    // sf::Sprite button(texture);
-    
-    // //get size of image
-    // sf::Vector2u imageSize=texture.getSize();
-    // //change origin to the center of the image (makes rotation easy)
-    // button.setOrigin(imageSize.x/2, imageSize.y/2);
-    // //set position
-    // sf::Vector2f position={300,200};
-    // button.setPosition(position.x,position.y);
-    // //choose color
-    // button.setColor(sf::Color(0, 0, 255));
-    // //set size as a ration of original size
-    // button.setScale(0.5,0.5);
-    // //Make label
-    // sf::Font font;
-    // if (!font.loadFromFile("college.ttf"))
-    // {
-    //     std::cout<<"Error opening file\n";
-    //     exit(2);
-    // }
-    // sf::Text text;
-    // text.setFont(font);
-    // //choose the font size based on button size (I choose half)
-    // unsigned int fontSize = button.getGlobalBounds().height/2;
-    // text.setCharacterSize(fontSize);
-    // //set label
-    // text.setString("Push me!");
-    // //set origin to the middle
-    // text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height/2);
-    // //set position at the middle of the button
-    // text.setPosition(position.x, position.y-fontSize/4);
-    // //choose colors
-    // sf::Color textNormal = sf::Color::Green;
-    // sf::Color textHover = sf::Color::Red;
-    // text.setFillColor(textNormal);
     sf::Clock gameStarted;
     while (window.isOpen())
     {
@@ -214,54 +173,9 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
             
-            //get position of the mouse
-            //sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
             mPos = sf::Mouse::getPosition(window);
             mousePosition = window.mapPixelToCoords(mPos);
             
-            // if(event.type == sf::Event::MouseMoved)
-            // {
-            //     if(mouseInButton)
-            //     {
-            //         text.setFillColor(textHover);
-            //     }
-            //     else
-            //     {
-            //         text.setFillColor(textNormal);
-            //     }
-            // }
-
-            // if (event.type == sf::Event::MouseButtonPressed)
-            // {
-            //     if(event.mouseButton.button==sf::Mouse::Left)
-            //     {
-            //         if(mouseInButton)
-            //         {
-            //             button.setRotation(180);
-            //         }
-            //         else
-            //         {
-            //             button.setRotation(0);
-            //         }
-            //     }
-                
-            // }
-            // if (event.type == sf::Event::MouseButtonReleased)
-            // {
-            //     if (event.mouseButton.button==sf::Mouse::Left)
-            //     {
-            //         if(mouseInButton)
-            //         {
-            //             text.setFillColor(textHover);
-            //             button.setRotation(0);
-            //         }
-            //         else
-            //         {
-            //             text.setFillColor(textNormal);
-            //             button.setRotation(0);
-            //         }
-            //     }
-            // }
             if(event.type==sf::Event::KeyPressed) {
                 if(event.key.code==sf::Keyboard::C) {
                     if(cameraOpen) {
@@ -283,17 +197,6 @@ int main()
             foxyClock.restart();
         }
 
-        // if(!introDone && gameStarted.getElapsedTime().asSeconds()<5) {
-        //     window.draw(introSprite);
-        //     window.display();
-        //     otherClock.restart();
-        //     foxyClock.restart();
-        // } else if(!introDone) {
-        //     introDone=true;
-        // }
-
-        
-
         window.clear();
         if(cameraOpen) {
             window.draw(allRooms[currentRoom].getRoomPicture());
@@ -310,7 +213,6 @@ int main()
                 
                     if(mouseInButton) {
                         currentRoom=i;
-                        std::cerr<<"Button Pressed\n";
                         if(i==3) {
                             foxyClock.restart();
                         }
@@ -324,25 +226,19 @@ int main()
             window.draw(office.getRoomPicture());
         }
         float i = elapsed;
-        // if (elapsed >= 35.f && !bonnieScareTriggered)
-        // {
-        //     jumpscare = true;
-        //     cameraOpen=false;
-        //     bonnieScareTriggered=true;
-        // }
 
-        // if(foxyClock.getElapsedTime().asSeconds()>=15) {
-        //     cameraOpen=false;
-        //     jumpscare=true;
-        //     foxyScareTriggered=true;
-        // }
+        if(foxyClock.getElapsedTime().asSeconds()>=15) {
+            cameraOpen=false;
+            jumpscare=true;
+            foxyScareTriggered=true;
+        }
         
         if(otherClock.getElapsedTime().asSeconds()>=5) {
-            // if(freddy.movementOpportunity(freddyOffice) && !rightDoorClosed) {
-            //     cameraOpen=false;
-            //     jumpscare=true;
-            //     freddyScareTriggered=true;
-            // }
+            if(freddy.movementOpportunity(freddyOffice) && !rightDoorClosed) {
+                cameraOpen=false;
+                jumpscare=true;
+                freddyScareTriggered=true;
+            }
             if(bonnie.movementOpportunity(bonnieOffice) && !leftDoorClosed) {
                 cameraOpen=false;
                 jumpscare=true;
@@ -474,32 +370,11 @@ int main()
             }
         }
         
-
-
-
-        // if (jumpscare==true)
-        // {
-        //     static bool soundPlayed = false;
-        //     if (!soundPlayed) {
-        //         scareOne.playSound();
-        //         fan.stopSound();
-        //         music.stop();
-        //         call.stop();
-        //         soundPlayed = true;
-        //     }
-        //     bonnieScare.runAnimation();
-        //     window.draw(bonnieScare.getSprite());
-        //     if (soundPlayed && scareOne.getStatus() == true) {
-        //         window.close();
-        //     }
-        // }
         if (call.getStatus()==sf::Music::Stopped && !ambiencePlaying)
         {
             music.play();
             ambiencePlaying=true;
         }
-        //window.draw(button);
-        //window.draw(text);
         window.display();
     }
     return 0;

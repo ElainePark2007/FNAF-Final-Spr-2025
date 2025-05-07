@@ -4,7 +4,7 @@
 
 Office::Office(std::string textureName, std::string name, int defaultFrame)
 {
-    sf::IntRect defaultTexture(0, 2*(defaultFrame+1)+720*(defaultFrame-1), 1600, 720);
+    sf::IntRect defaultTexture(0, 2*(defaultFrame)+720*(defaultFrame-1), 1600, 720);
     sf::IntRect leftTexture(0, 2*(4)+720*(2), 1600, 720);
     sf::IntRect rightTexture(0, 2*(5)+720*(3), 1600, 720);
 
