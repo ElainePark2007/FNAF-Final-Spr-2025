@@ -1,7 +1,12 @@
+/**
+ * @file animatronic.h
+ * @author Matteo Coppola
+ * @brief Animatronic class declaration file
+ * @date 2025-05-06
+ */
 #ifndef ANIMATRONIC_H
 #define ANIMATRONIC_H
 #include <iostream>
-#include <chrono>
 #include <thread>
 
 using namespace std::chrono;

@@ -1,3 +1,9 @@
+/**
+ * @file room.cpp
+ * @author Matteo Coppola
+ * @brief Room class definition file
+ * @date 2025-05-06
+ */
 #include <iostream>
 #include "room.h"
 
