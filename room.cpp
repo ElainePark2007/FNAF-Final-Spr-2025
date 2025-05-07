@@ -13,6 +13,7 @@ Room::Room(std::string textureName, std::string name, int defaultFrame, int anim
     mStateShown.setTexture(mDefaultState);
     mRoomName=name;
     animatronicPresent=false;
+    nextRoom=nullptr;
 }
 
 void Room::setRoomName(std::string name)
@@ -43,5 +44,21 @@ sf::Sprite Room::getRoomPicture()
 
 void Room::switchToAnimatronicState()
 {
+    animatronicPresent=true;
     mStateShown.setTexture(mAnimatronicState);
+}
+
+void Room::setNextRoom(Room &next)
+{
+    nextRoom=&next;
+}
+
+bool Room::getAnimatronicState()
+{
+    return animatronicPresent;
+}
+
+Room* Room::getNextRoom()
+{
+    return nextRoom;
 }

@@ -1,8 +1,11 @@
 #include "animatronic.h"
+#include "room.h"
 
-Animatronic::Animatronic(int ai)
+Animatronic::Animatronic(int ai, Room &location)
 {
     mAiLevel=ai;
+    mLocation=&location;
+    mLocation->switchToAnimatronicState();
 }
 
 int const Animatronic::getAiLevel()
@@ -10,7 +13,7 @@ int const Animatronic::getAiLevel()
     return mAiLevel;
 }
 
-std::string const Animatronic::getLocation()
+Room* const Animatronic::getLocation()
 {
     return mLocation;
 }
@@ -20,9 +23,9 @@ void Animatronic::setAiLevel(int ai)
     mAiLevel=ai;
 }
 
-void Animatronic::setLocation(std::string location)
+void Animatronic::setLocation(Room location)
 {
-    mLocation=location; //String is a placeholder, open to ideas for determing location? keeping it as string is also fine
+    mLocation=&location; //String is a placeholder, open to ideas for determing location? keeping it as string is also fine
 }
 
 void Animatronic::aiIncrease()
@@ -34,19 +37,26 @@ void Animatronic::aiIncrease()
  * @brief Decides if animatronic should move based on random numbers
  * 
  */
-void Animatronic::movementOpportunity()
+bool Animatronic::movementOpportunity(bool &jumpscare)
 {
     int movement=rand()%20+1;
-    std::cout<<movement<<std::endl;
     if(movement<=mAiLevel) {
-        moveRooms();
+        return moveRooms(jumpscare);
     }
+    return false;
     //Gives animatronic the opportuntiy to move
     //Calls moveRooms() if true
 }
 
-void Animatronic::moveRooms()
+bool Animatronic::moveRooms(bool &jumpscare)
 {
-    //Decides which room to move to if there's a choice
-    //Moves straight if no choice is available
+    if(mLocation->getNextRoom()==nullptr) {
+        return true;
+    } else if(!(mLocation->getNextRoom()->getAnimatronicState())) {
+        mLocation->switchAnimatronicState();
+        mLocation=mLocation->getNextRoom();
+        mLocation->switchAnimatronicState();
+        return false;
+    }
+    return false;
 }

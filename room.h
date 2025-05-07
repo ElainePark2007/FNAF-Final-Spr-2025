@@ -7,7 +7,6 @@
 #ifndef ROOM_H
 #define ROOM_H
 #include <SFML/Graphics.hpp>
-#include "animatronic.h"
 
 class Room {
 public:
@@ -15,9 +14,12 @@ public:
     void setRoomName(std::string name);
     void switchAnimatronicState();
     void switchToAnimatronicState();
+    void setNextRoom(Room &next);
 
     std::string getRoomName();
     sf::Sprite getRoomPicture();
+    bool getAnimatronicState();
+    Room* getNextRoom();
 
 
 
@@ -30,6 +32,7 @@ private:
     sf::Sprite mStateShown;
     std::string mRoomName;
     bool animatronicPresent;
+    Room* nextRoom;
 
 
 
