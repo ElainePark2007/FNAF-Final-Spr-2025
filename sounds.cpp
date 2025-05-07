@@ -1,11 +1,12 @@
 #include "sounds.h"
-//g++ -std=c++11 main.cpp sounds.cpp room.cpp button.cpp -o sfml-app -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -I/usr/local/opt/sfml@2/include -L/usr/local/opt/sfml@2/lib
+//g++ -std=c++11 *.cpp -o sfml-app -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -I/usr/local/opt/sfml@2/include -L/usr/local/opt/sfml@2/lib
 Sound::Sound()
 {
 }
 Sound::~Sound()
 {
 }
+
 bool Sound::loadSound(const std::string &file)
 {
     if (!buffer.loadFromFile(file))
@@ -30,6 +31,13 @@ void Sound::loop()
 void Sound::stopSound()
 {
     sound.stop();
+}
+bool Sound::getStatus() {
+    if (sound.getStatus()==sf::SoundSource::Status::Stopped)
+    {
+        return true;
+    }
+    return false;
 }
 //example for how to load sound sound if need be
 // std::string l = "pigeons-flying-6351.mp3";
