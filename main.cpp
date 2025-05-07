@@ -506,7 +506,7 @@ int main()
             ambiencePlaying=true;
         }
 
-        if (gameStarted.getElapsedTime().asSeconds()>10)
+        if (gameStarted.getElapsedTime().asSeconds()>90)
         {
             fan.stopSound();
             music.stop();
