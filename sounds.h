@@ -13,6 +13,7 @@ public:
     void volume(int v);
     void loop();
     void stopSound();
+    bool getStatus();
 
 private:
     sf::Sound sound;

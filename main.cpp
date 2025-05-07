@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/System.hpp>
 #include <iostream>
 #include "animatronic.h"
 #include "animation.h"
@@ -16,9 +17,12 @@ int main()
     //Animatronic bonnie(3);
     //Animatronic chica(3);
     //Animatronic foxy(2);
-
+    bool bonnieScareTriggered = false;
+    bool jumpscare = false;
     bool gameOver=false;
-    
+    sf::Clock clock;
+    Animation bonnieScare("Animations/bonnieAnimation (w1600, f11).png", 11, 1600);
+
     
 
     sf::Texture cameraTexture;
@@ -71,35 +75,33 @@ int main()
     int currentRoom=0;
 
    
-    sf::RenderWindow window(sf::VideoMode(1600, 720), "MyButton!");
+    sf::RenderWindow window(sf::VideoMode(1600, 720), "Five Nights at Freddy's");
     sf::Texture texture;
     if (!texture.loadFromFile("button.png"))
     {
         std::cout<<"Error opening file\n";
         exit(1);
     }
+
     //set initial call and ambience to follow
+    bool ambiencePlaying = false;
     sf::Music music;
-    if (!music.openFromFile("musicFiles/Eerie ambience largesca.mp3"))
+    if (!music.openFromFile("musicFiles/Ambience 2.mp3"))
     {
     }
     sf::Music call;
     if (!call.openFromFile("musicFiles/Voiceover1c.mp3"))
     {
     }
-
+    call.setPosition(0, 1, 10); // change its 3D position
+    call.setVolume(100); 
     // Change some parameters
     music.setPosition(0, 1, 10); // change its 3D position
     music.setVolume(100);         // reduce the volume
     //music.setLoop(true);         // make it loop
-    call.setPosition(0, 1, 10); // change its 3D position
-    call.setVolume(70); 
+    
     // Play it
-    //call.play();
-    // if (call.getStatus()==sf::Music::Status::Stopped)
-    // {
-        // music.play();
-    //}
+    call.play();
     //create sound objects
     Sound camOff;
     Sound windowScare;
@@ -121,6 +123,7 @@ int main()
     fan.volume(5);
     fan.loop();
     fan.playSound();
+    
     
     //create sprite that look like a button
     sf::Sprite button(texture);
@@ -160,6 +163,7 @@ int main()
     text.setFillColor(textNormal);
     while (window.isOpen())
     {
+        float elapsed = clock.getElapsedTime().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -185,6 +189,7 @@ int main()
                     text.setFillColor(textNormal);
                 }
             }
+
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if(event.mouseButton.button==sf::Mouse::Left)
@@ -232,12 +237,12 @@ int main()
             
                 if(mouseInButton) {
                     currentRoom=i;
+                    camSwitch.playSound();
                 }
             }
         }
 
         window.clear();
-
 
         
         
@@ -249,8 +254,36 @@ int main()
                 window.draw(cameraButtons[i]);
             }
         }
-        window.draw(button);
-        window.draw(text);
+        float i = elapsed;
+        if (elapsed >= 35.f && !bonnieScareTriggered)
+        {
+            jumpscare = true;
+            cameraOpen=false;
+            bonnieScareTriggered=true;
+        }
+        if (jumpscare==true)
+        {
+            static bool soundPlayed = false;
+            if (!soundPlayed) {
+                scareOne.playSound();
+                fan.stopSound();
+                music.stop();
+                call.stop();
+                soundPlayed = true;
+            }
+            bonnieScare.runAnimation();
+            window.draw(bonnieScare.getSprite());
+            if (soundPlayed && scareOne.getStatus() == true) {
+                window.close();
+            }
+        }
+        if (call.getStatus()==sf::Music::Stopped && !ambiencePlaying)
+        {
+            music.play();
+            ambiencePlaying=true;
+        }
+        //window.draw(button);
+        //window.draw(text);
         window.display();
     }
     return 0;
