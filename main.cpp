@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
+ * @brief Main game file
+ * @date 2025-05-07
+ */
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
@@ -173,6 +179,14 @@ int main()
         exit(1);
     }
     introSprite.setTexture(intro);
+
+    sf::Texture outro;
+    sf::Sprite outroSprite;
+    if(!outro.loadFromFile("introStuff.png", sf::IntRect(0, 4334, 1600, 720))) {
+        std::cerr<<"Error loading intro texture\n";
+        exit(1);
+    }
+    outroSprite.setTexture(outro);
     
     sf::Clock gameStarted;
     sf::Clock jumpNoise;
@@ -232,14 +246,59 @@ int main()
                             foxyClock.restart();
                         }
                         if(chica.getLocation()==&allRooms[9] && i==9) {
+                            windowScare.playSound();
+
+                            sf::Clock ending;
+                            while(ending.getElapsedTime().asMilliseconds()<500)
+                            {
+                                window.clear();
+                                endingScreen.runAnimation();
+                                window.draw(endingScreen.getSprite());
+                                window.display();
+                                if (!staticPlayed)
+                                {
+                                    endStatic.playSound();
+                                    staticPlayed=true;
+                                }
+                            }
                             chicaOffice=false;
                             chica.setLocation(allRooms[7]);
                         }
                         if(bonnie.getLocation()==&allRooms[6] && i==6) {
+                            windowScare.playSound();
+
+                            sf::Clock ending;
+                            while(ending.getElapsedTime().asMilliseconds()<500)
+                            {
+                                window.clear();
+                                endingScreen.runAnimation();
+                                window.draw(endingScreen.getSprite());
+                                window.display();
+                                if (!staticPlayed)
+                                {
+                                    endStatic.playSound();
+                                    staticPlayed=true;
+                                }
+                            }
                             bonnieOffice=false;
                             bonnie.setLocation(allRooms[0]);
                         }
                         if(freddy.getLocation()==&allRooms[6] && i==6) {
+                            windowScare.playSound();
+
+                            sf::Clock ending;
+                            while(ending.getElapsedTime().asMilliseconds()<500)
+                            {
+                                window.clear();
+                                endingScreen.runAnimation();
+                                window.draw(endingScreen.getSprite());
+                                window.display();
+                                if (!staticPlayed)
+                                {
+                                    endStatic.playSound();
+                                    staticPlayed=true;
+                                }
+                            }
                             freddyOffice=false;
                             freddy.setLocation(allRooms[0]);
                         }
@@ -447,8 +506,19 @@ int main()
             ambiencePlaying=true;
         }
 
-        if (gameStarted.getElapsedTime().asSeconds()>535)
+        if (gameStarted.getElapsedTime().asSeconds()>10)
         {
+            fan.stopSound();
+            music.stop();
+            call.stop();
+            foxyClock.restart();
+            otherClock.restart();
+            sf::Clock temp;
+            win.playSound();
+            while(temp.getElapsedTime().asSeconds()<10) {
+                window.draw(outroSprite);
+                window.display();
+            }
             window.close();
         }
 

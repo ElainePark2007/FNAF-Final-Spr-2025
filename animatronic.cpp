@@ -1,12 +1,18 @@
 /**
  * @file animatronic.cpp
- * @author Matteo Coppola
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
  * @brief Animatronic class definition file
  * @date 2025-05-06
  */
 #include "animatronic.h"
 #include "room.h"
 
+/**
+ * @brief Construct a new Animatronic:: Animatronic object
+ * 
+ * @param ai Default ai level
+ * @param location Default location
+ */
 Animatronic::Animatronic(int ai, Room &location)
 {
     mAiLevel=ai;
@@ -24,6 +30,11 @@ int const Animatronic::getAiLevel()
     return mAiLevel;
 }
 
+/**
+ * @brief Returns location of animatronic
+ * 
+ * @return Room* const Pointer to room object
+ */
 Room* const Animatronic::getLocation()
 {
     return mLocation;
@@ -39,6 +50,11 @@ void Animatronic::setAiLevel(int ai)
     mAiLevel=ai;
 }
 
+/**
+ * @brief Sets location of animatronic
+ * 
+ * @param location Location to move to
+ */
 void Animatronic::setLocation(Room &location)
 {
     mLocation->switchAnimatronicState();
@@ -70,6 +86,13 @@ bool Animatronic::movementOpportunity(bool &jumpscare)
     //Calls moveRooms() if true
 }
 
+/**
+ * @brief Moves animatronic to next room
+ * 
+ * @param jumpscare True if animatronic is ready to jumpscare
+ * @return true animatronic will scare
+ * @return false animatronic won't scare
+ */
 bool Animatronic::moveRooms(bool &jumpscare)
 {
     if(mLocation->getNextRoom()==nullptr) {

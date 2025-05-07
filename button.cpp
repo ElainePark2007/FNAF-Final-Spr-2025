@@ -1,5 +1,19 @@
+/**
+ * @file button.cpp
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
+ * @brief Button class definition file
+ * @date 2025-05-07
+ */
 #include "button.h"
 
+/**
+ * @brief Construct a new Button:: Button object
+ * 
+ * @param s String for text
+ * @param position Position of button
+ * @param size Size of button
+ * @param color Color of button
+ */
 Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Color color)
 {
 
@@ -61,10 +75,20 @@ Button::Button(std::string s, sf::Vector2f position, sf::Vector2f size, sf::Colo
     //set color to White, position to {300,100}, set state to normal, and scale to 100%
     //set font for the text, set the size of the text to the half of Button size, set the origin to the middle of the text 
     //and set position at the middle of the button, assign “Push me!” as a string of the button
+/**
+ * @brief Construct a new Button:: Button object
+ * 
+ */
 Button::Button() :Button("Push me!", sf::Vector2f({300,100}), sf::Vector2f({600,212}), sf::Color::White)
 {
 
 }
+
+/**
+ * @brief Sets text of button
+ * 
+ * @param s String for text
+ */
 void Button::setText(std::string s)
 {
     mText.setString(s);
@@ -72,6 +96,12 @@ void Button::setText(std::string s)
     mText.setOrigin(mText.getGlobalBounds().width/2, mText.getGlobalBounds().height/2);
     mText.setPosition(mPosition.x, mPosition.y-fontSize/4);
 }
+
+/**
+ * @brief Sets position of button
+ * 
+ * @param position Coordinates for position
+ */
 void Button::setPosition(sf::Vector2f position)
 {
     mPosition=position;
@@ -80,6 +110,12 @@ void Button::setPosition(sf::Vector2f position)
     mText.setOrigin(mText.getGlobalBounds().width/2, mText.getGlobalBounds().height/2);
     mText.setPosition(mPosition.x, mPosition.y-fontSize/4);
 }
+
+/**
+ * @brief Sets size of button
+ * 
+ * @param size Size for button
+ */
 void Button::setSize(sf::Vector2f  size)
 {
     sf::Vector2u imageSize=mTexture.getSize();
@@ -90,12 +126,24 @@ void Button::setSize(sf::Vector2f  size)
     mText.setPosition(mPosition.x, mPosition.y-fontSize/4);
 
 }
+
+/**
+ * @brief Sets color of button
+ * 
+ * @param btnColor Color for button
+ */
 void Button::setColor(sf::Color btnColor)
 {
     mButtonColor=btnColor;
     mButton.setColor(btnColor);
 }
 
+/**
+ * @brief Updates button
+ * 
+ * @param e Event for button
+ * @param window Window to display
+ */
 void Button::update(sf::Event& e, sf::RenderWindow& window)
 {
     sf::Vector2i mPos = sf::Mouse::getPosition(window);
@@ -147,6 +195,12 @@ void Button::update(sf::Event& e, sf::RenderWindow& window)
             }
 }
 
+/**
+ * @brief Draws button
+ * 
+ * @param target Window to draw in
+ * @param states State of button
+ */
 void Button::draw(sf::RenderTarget& target,sf::RenderStates states) const
 {
     target.draw(mButton, states);

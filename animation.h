@@ -1,6 +1,6 @@
 /**
  * @file animation.h
- * @author Matteo Coppola
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
  * @brief Animation class declaration file
  * @date 2025-05-05
  */

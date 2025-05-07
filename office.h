@@ -1,3 +1,13 @@
+/**
+ * @file office.h
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
+ * @brief Office class declaration file
+ * @version 0.1
+ * @date 2025-05-07
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #ifndef OFFICE_H
 #define OFFICE_H
 #include "room.h"
