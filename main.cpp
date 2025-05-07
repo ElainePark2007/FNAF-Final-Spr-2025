@@ -7,6 +7,7 @@
 #include "sounds.h"
 #include "room.h"
 #include "button.h"
+#include "office.h"
 
 int main()
 {
@@ -45,6 +46,8 @@ int main()
     Room room9("rooms/eastHall.png", "East Hall A", 1, 6);
     Room room10("rooms/eastHall.png", "East Hall B", 7, 15);
 
+    Office office("rooms/theOffice.png", "The Office", 1);
+
     allRooms.push_back(room1);
     allRooms.push_back(room2);
     allRooms.push_back(room3);
@@ -70,7 +73,7 @@ int main()
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 624), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 664), sf::Vector2f(53, 32), sf::Color::Transparent));
 
-    bool cameraOpen=true;
+    bool cameraOpen=false;
     bool mouseInButton;
     int currentRoom=0;
 
@@ -174,10 +177,7 @@ int main()
             //sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
             sf::Vector2i mPos = sf::Mouse::getPosition(window);
             sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
-            bool mouseInButton =    mousePosition.x >= button.getPosition().x - button.getGlobalBounds().width/2
-                                    && mousePosition.x <= button.getPosition().x + button.getGlobalBounds().width/2
-                                    && mousePosition.y >= button.getPosition().y - button.getGlobalBounds().height/2
-                                    && mousePosition.y <= button.getPosition().y + button.getGlobalBounds().height/2;
+            bool mouseInButton;
             if(event.type == sf::Event::MouseMoved)
             {
                 if(mouseInButton)
@@ -221,30 +221,23 @@ int main()
                     }
                 }
             }
-        }
-
-
-        sf::Vector2i mPos = sf::Mouse::getPosition(window);
-        sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
-
-        for(int i=0; i<10; i++)
-        {
-            if(event.type==sf::Event::MouseButtonPressed) {
-                mouseInButton =    mousePosition.x >= cameraButtons[i].getPosition().x - cameraButtons[i].getDimensions().x
-                && mousePosition.x <= cameraButtons[i].getPosition().x + cameraButtons[i].getDimensions().x
-                && mousePosition.y >= cameraButtons[i].getPosition().y - cameraButtons[i].getDimensions().y
-                && mousePosition.y <= cameraButtons[i].getPosition().y + cameraButtons[i].getDimensions().y;
-            
-                if(mouseInButton) {
-                    currentRoom=i;
-                    camSwitch.playSound();
+            if(event.type==sf::Event::KeyPressed) {
+                if(event.key.code==sf::Keyboard::C) {
+                    if(cameraOpen) {
+                        cameraOpen=false;
+                        camOff.playSound();
+                    } else {
+                        cameraOpen=true;
+                        camOn.playSound();
+                    }
                 }
             }
         }
-
-        window.clear();
+        sf::Vector2i mPos = sf::Mouse::getPosition(window);
+        sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
 
         
+        window.clear();
         
         if(cameraOpen) {
             window.draw(allRooms[currentRoom].getRoomPicture());
@@ -253,16 +246,32 @@ int main()
             {
                 window.draw(cameraButtons[i]);
             }
+
+            for(int i=0; i<10; i++)
+            {
+                if(event.type==sf::Event::MouseButtonPressed) {
+                    mouseInButton =    mousePosition.x >= cameraButtons[i].getPosition().x - cameraButtons[i].getDimensions().x
+                    && mousePosition.x <= cameraButtons[i].getPosition().x + cameraButtons[i].getDimensions().x
+                    && mousePosition.y >= cameraButtons[i].getPosition().y - cameraButtons[i].getDimensions().y
+                    && mousePosition.y <= cameraButtons[i].getPosition().y + cameraButtons[i].getDimensions().y;
+                
+                    if(mouseInButton) {
+                        currentRoom=i;
+                        camSwitch.playSound();
+                    }
+                }
+            }
+
         } else {
-            
+            window.draw(office.getRoomPicture());
         }
         float i = elapsed;
-        if (elapsed >= 35.f && !bonnieScareTriggered)
-        {
-            jumpscare = true;
-            cameraOpen=false;
-            bonnieScareTriggered=true;
-        }
+        // if (elapsed >= 35.f && !bonnieScareTriggered)
+        // {
+        //     jumpscare = true;
+        //     cameraOpen=false;
+        //     bonnieScareTriggered=true;
+        // }
         if (jumpscare==true)
         {
             static bool soundPlayed = false;
