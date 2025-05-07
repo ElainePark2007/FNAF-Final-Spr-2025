@@ -5,15 +5,13 @@
  * @date 2025-05-06
  */
 #include "animatronic.h"
+#include "room.h"
 
-/**
- * @brief Construct a new Animatronic:: Animatronic object
- * 
- * @param ai Starting ai level
- */
-Animatronic::Animatronic(int ai)
+Animatronic::Animatronic(int ai, Room &location)
 {
     mAiLevel=ai;
+    mLocation=&location;
+    mLocation->switchToAnimatronicState();
 }
 
 /**
@@ -26,12 +24,7 @@ int const Animatronic::getAiLevel()
     return mAiLevel;
 }
 
-/**
- * @brief Returns location of animatronic
- * 
- * @return std::string const Location
- */
-std::string const Animatronic::getLocation()
+Room* const Animatronic::getLocation()
 {
     return mLocation;
 }
@@ -46,14 +39,9 @@ void Animatronic::setAiLevel(int ai)
     mAiLevel=ai;
 }
 
-/**
- * @brief Sets location of animatronic (used for testing)
- * 
- * @param location Location
- */
-void Animatronic::setLocation(std::string location)
+void Animatronic::setLocation(Room location)
 {
-    mLocation=location; //String is a placeholder, open to ideas for determing location? keeping it as string is also fine
+    mLocation=&location; //String is a placeholder, open to ideas for determing location? keeping it as string is also fine
 }
 
 /**
@@ -69,23 +57,26 @@ void Animatronic::aiIncrease()
  * @brief Decides if animatronic should move based on random numbers
  * 
  */
-void Animatronic::movementOpportunity()
+bool Animatronic::movementOpportunity(bool &jumpscare)
 {
     int movement=rand()%20+1;
-    std::cout<<movement<<std::endl;
     if(movement<=mAiLevel) {
-        moveRooms();
+        return moveRooms(jumpscare);
     }
+    return false;
     //Gives animatronic the opportuntiy to move
     //Calls moveRooms() if true
 }
 
-/**
- * @brief Moves animatronic from room to room
- * 
- */
-void Animatronic::moveRooms()
+bool Animatronic::moveRooms(bool &jumpscare)
 {
-    //Decides which room to move to if there's a choice
-    //Moves straight if no choice is available
+    if(mLocation->getNextRoom()==nullptr) {
+        return true;
+    } else if(!(mLocation->getNextRoom()->getAnimatronicState())) {
+        mLocation->switchAnimatronicState();
+        mLocation=mLocation->getNextRoom();
+        mLocation->switchAnimatronicState();
+        return false;
+    }
+    return false;
 }

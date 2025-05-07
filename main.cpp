@@ -18,11 +18,19 @@ int main()
     //Animatronic bonnie(3);
     //Animatronic chica(3);
     //Animatronic foxy(2);
-    bool bonnieScareTriggered = false;
+    bool bonnieScareTriggered = false, foxyScareTriggered=false, chicaScareTriggered=false, freddyScareTriggered=false;
+    bool bonnieOffice=false, foxyOffice=false, chicaOffice=false, freddyOffice=false;
     bool jumpscare = false;
     bool gameOver=false;
     sf::Clock clock;
     Animation bonnieScare("Animations/bonnieAnimation (w1600, f11).png", 11, 1600);
+    Animation freddyScare("Animations/freddyAnimation (w1600, f22).png", 22, 1600);
+    Animation chicaScare("Animations/chicaAnimation (w1600, f16).png", 16, 1600);
+    Animation foxyScare("Animations/foxyAnimation (w1600, f21).png", 21, 1600);
+    Animation endingScreen("Animations/endingScreen (w1600, f8).png", 8, 1600);
+
+    sf::Clock foxyClock;
+    sf::Clock otherClock;
 
     
 
@@ -60,26 +68,36 @@ int main()
     allRooms.push_back(room9);
     allRooms.push_back(room10);
     allRooms.push_back(room11);
+    allRooms[0].setNextRoom(allRooms[1]);
+    allRooms[1].setNextRoom(allRooms[2]);
+    allRooms[2].setNextRoom(allRooms[3]);
+    allRooms[3].setNextRoom(allRooms[5]);
+    allRooms[4].setNextRoom(allRooms[6]);
+    allRooms[5].setNextRoom(allRooms[4]);
+    //Add if in room7 and animatronic moves, then jumpscare unless door closed
+    allRooms[7].setNextRoom(allRooms[8]);
+    allRooms[8].setNextRoom(allRooms[9]);
+    //Add if in room9 and animatronic moves, then jumpscare unless door closed
 
-   
+    Animatronic foxy(0, allRooms[3]);
+    Animatronic freddy(10, allRooms[7]);
+    Animatronic bonnie(10, allRooms[0]);
+    Animatronic chica(10, allRooms[0]);
 
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 373), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1303, 429), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1197, 456), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1271, 507), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1239, 605), sf::Vector2f(53, 32), sf::Color::Transparent));
-
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 623), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 663), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1535, 457), sf::Vector2f(53, 32), sf::Color::Transparent));
-    //kitchen stuff
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 624), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 664), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1526, 588), sf::Vector2f(53, 32), sf::Color::Transparent));
     
-
-    bool cameraOpen=false;
-    bool mouseInButton;
+    bool cameraOpen=false, leftDoorClosed=false, rightDoorClosed=false;
+    bool mouseInButton=false;
     int currentRoom=0;
 
    
@@ -133,44 +151,46 @@ int main()
     fan.playSound();
     
     
-    //create sprite that look like a button
-    sf::Sprite button(texture);
+    // //create sprite that look like a button
+    // sf::Sprite button(texture);
     
-    //get size of image
-    sf::Vector2u imageSize=texture.getSize();
-    //change origin to the center of the image (makes rotation easy)
-    button.setOrigin(imageSize.x/2, imageSize.y/2);
-    //set position
-    sf::Vector2f position={300,200};
-    button.setPosition(position.x,position.y);
-    //choose color
-    button.setColor(sf::Color(0, 0, 255));
-    //set size as a ration of original size
-    button.setScale(0.5,0.5);
-    //Make label
-    sf::Font font;
-    if (!font.loadFromFile("college.ttf"))
-    {
-        std::cout<<"Error opening file\n";
-        exit(2);
-    }
-    sf::Text text;
-    text.setFont(font);
-    //choose the font size based on button size (I choose half)
-    unsigned int fontSize = button.getGlobalBounds().height/2;
-    text.setCharacterSize(fontSize);
-    //set label
-    text.setString("Push me!");
-    //set origin to the middle
-    text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height/2);
-    //set position at the middle of the button
-    text.setPosition(position.x, position.y-fontSize/4);
-    //choose colors
-    sf::Color textNormal = sf::Color::Green;
-    sf::Color textHover = sf::Color::Red;
-    text.setFillColor(textNormal);
+    // //get size of image
+    // sf::Vector2u imageSize=texture.getSize();
+    // //change origin to the center of the image (makes rotation easy)
+    // button.setOrigin(imageSize.x/2, imageSize.y/2);
+    // //set position
+    // sf::Vector2f position={300,200};
+    // button.setPosition(position.x,position.y);
+    // //choose color
+    // button.setColor(sf::Color(0, 0, 255));
+    // //set size as a ration of original size
+    // button.setScale(0.5,0.5);
+    // //Make label
+    // sf::Font font;
+    // if (!font.loadFromFile("college.ttf"))
+    // {
+    //     std::cout<<"Error opening file\n";
+    //     exit(2);
+    // }
+    // sf::Text text;
+    // text.setFont(font);
+    // //choose the font size based on button size (I choose half)
+    // unsigned int fontSize = button.getGlobalBounds().height/2;
+    // text.setCharacterSize(fontSize);
+    // //set label
+    // text.setString("Push me!");
+    // //set origin to the middle
+    // text.setOrigin(text.getGlobalBounds().width/2, text.getGlobalBounds().height/2);
+    // //set position at the middle of the button
+    // text.setPosition(position.x, position.y-fontSize/4);
+    // //choose colors
+    // sf::Color textNormal = sf::Color::Green;
+    // sf::Color textHover = sf::Color::Red;
+    // text.setFillColor(textNormal);
+    sf::Clock gameStarted;
     while (window.isOpen())
     {
+        
         float elapsed = clock.getElapsedTime().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
@@ -182,50 +202,50 @@ int main()
             //sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
             sf::Vector2i mPos = sf::Mouse::getPosition(window);
             sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
-            bool mouseInButton;
-            if(event.type == sf::Event::MouseMoved)
-            {
-                if(mouseInButton)
-                {
-                    text.setFillColor(textHover);
-                }
-                else
-                {
-                    text.setFillColor(textNormal);
-                }
-            }
+            
+            // if(event.type == sf::Event::MouseMoved)
+            // {
+            //     if(mouseInButton)
+            //     {
+            //         text.setFillColor(textHover);
+            //     }
+            //     else
+            //     {
+            //         text.setFillColor(textNormal);
+            //     }
+            // }
 
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
-                if(event.mouseButton.button==sf::Mouse::Left)
-                {
-                    if(mouseInButton)
-                    {
-                        button.setRotation(180);
-                    }
-                    else
-                    {
-                        button.setRotation(0);
-                    }
-                }
+            // if (event.type == sf::Event::MouseButtonPressed)
+            // {
+            //     if(event.mouseButton.button==sf::Mouse::Left)
+            //     {
+            //         if(mouseInButton)
+            //         {
+            //             button.setRotation(180);
+            //         }
+            //         else
+            //         {
+            //             button.setRotation(0);
+            //         }
+            //     }
                 
-            }
-            if (event.type == sf::Event::MouseButtonReleased)
-            {
-                if (event.mouseButton.button==sf::Mouse::Left)
-                {
-                    if(mouseInButton)
-                    {
-                        text.setFillColor(textHover);
-                        button.setRotation(0);
-                    }
-                    else
-                    {
-                        text.setFillColor(textNormal);
-                        button.setRotation(0);
-                    }
-                }
-            }
+            // }
+            // if (event.type == sf::Event::MouseButtonReleased)
+            // {
+            //     if (event.mouseButton.button==sf::Mouse::Left)
+            //     {
+            //         if(mouseInButton)
+            //         {
+            //             text.setFillColor(textHover);
+            //             button.setRotation(0);
+            //         }
+            //         else
+            //         {
+            //             text.setFillColor(textNormal);
+            //             button.setRotation(0);
+            //         }
+            //     }
+            // }
             if(event.type==sf::Event::KeyPressed) {
                 if(event.key.code==sf::Keyboard::C) {
                     if(cameraOpen) {
@@ -241,9 +261,20 @@ int main()
         sf::Vector2i mPos = sf::Mouse::getPosition(window);
         sf::Vector2f mousePosition = window.mapPixelToCoords(mPos);
 
+        sf::Texture intro;
+        sf::Sprite introSprite;
+        intro.loadFromFile("introStuff.png", sf::IntRect(0, 2892, 1600, 720));
+        introSprite.setTexture(intro);
+        while(gameStarted.getElapsedTime().asSeconds()<5) {
+            window.draw(introSprite);
+            window.display();
+            otherClock.restart();
+            foxyClock.restart();
+        }
+
         
+
         window.clear();
-        
         if(cameraOpen) {
             window.draw(allRooms[currentRoom].getRoomPicture());
             window.draw(cameraMenu);
@@ -262,7 +293,12 @@ int main()
                 
                     if(mouseInButton) {
                         currentRoom=i;
+                        std::cerr<<"Button Pressed\n";
+                        if(i==4) {
+                            foxyClock.restart();
+                        }
                         camSwitch.playSound();
+                        mouseInButton=false;
                     }
                 }
             }
@@ -277,9 +313,32 @@ int main()
         //     cameraOpen=false;
         //     bonnieScareTriggered=true;
         // }
-        if (jumpscare==true)
+
+        if(foxyClock.getElapsedTime().asSeconds()>=15) {
+            cameraOpen=false;
+            foxyScareTriggered=true;
+        }
+        
+        if(otherClock.getElapsedTime().asSeconds()>=5) {
+            if(freddy.movementOpportunity(freddyOffice) && !rightDoorClosed) {
+                cameraOpen=false;
+                freddyScareTriggered=true;
+            }
+            if(bonnie.movementOpportunity(bonnieOffice) && !leftDoorClosed) {
+                cameraOpen=false;
+                bonnieScareTriggered=true;
+            }
+            if(chica.movementOpportunity(chicaOffice) && !leftDoorClosed) {
+                cameraOpen=false;
+                chicaScareTriggered=true;
+            }
+            otherClock.restart();
+        }
+
+        while (foxyScareTriggered)
         {
             static bool soundPlayed = false;
+            
             if (!soundPlayed) {
                 scareOne.playSound();
                 fan.stopSound();
@@ -287,12 +346,129 @@ int main()
                 call.stop();
                 soundPlayed = true;
             }
-            bonnieScare.runAnimation();
-            window.draw(bonnieScare.getSprite());
+            window.clear();
+            foxyScare.runAnimation();
+            window.draw(foxyScare.getSprite());
+            window.display();
             if (soundPlayed && scareOne.getStatus() == true) {
+                sf::Clock ending;
+                while(ending.getElapsedTime().asSeconds()<3)
+                {
+                    window.clear();
+                    endingScreen.runAnimation();
+                    window.draw(endingScreen.getSprite());
+                    window.display();
+                }
                 window.close();
+                break;
             }
         }
+
+        while (bonnieScareTriggered)
+        {
+            static bool soundPlayed = false;
+            
+            if (!soundPlayed) {
+                scareOne.playSound();
+                fan.stopSound();
+                music.stop();
+                call.stop();
+                soundPlayed = true;
+            }
+            window.clear();
+            bonnieScare.runAnimation();
+            window.draw(bonnieScare.getSprite());
+            window.display();
+            if (soundPlayed && scareOne.getStatus() == true) {
+                sf::Clock ending;
+                while(ending.getElapsedTime().asSeconds()<3)
+                {
+                    window.clear();
+                    endingScreen.runAnimation();
+                    window.draw(endingScreen.getSprite());
+                    window.display();
+                }
+                window.close();
+                break;
+            }
+        }
+
+        while (freddyScareTriggered)
+        {
+            static bool soundPlayed = false;
+            
+            if (!soundPlayed) {
+                scareOne.playSound();
+                fan.stopSound();
+                music.stop();
+                call.stop();
+                soundPlayed = true;
+            }
+            window.clear();
+            freddyScare.runAnimation();
+            window.draw(freddyScare.getSprite());
+            window.display();
+            if (soundPlayed && scareOne.getStatus() == true) {
+                sf::Clock ending;
+                while(ending.getElapsedTime().asSeconds()<3)
+                {
+                    window.clear();
+                    endingScreen.runAnimation();
+                    window.draw(endingScreen.getSprite());
+                    window.display();
+                }
+                window.close();
+                break;
+            }
+        }
+
+        while (chicaScareTriggered)
+        {
+            static bool soundPlayed = false;
+            
+            if (!soundPlayed) {
+                scareOne.playSound();
+                fan.stopSound();
+                music.stop();
+                call.stop();
+                soundPlayed = true;
+            }
+            window.clear();
+            chicaScare.runAnimation();
+            window.draw(chicaScare.getSprite());
+            window.display();
+            if (soundPlayed && scareOne.getStatus() == true) {
+                sf::Clock ending;
+                while(ending.getElapsedTime().asSeconds()<3)
+                {
+                    window.clear();
+                    endingScreen.runAnimation();
+                    window.draw(endingScreen.getSprite());
+                    window.display();
+                }
+                window.close();
+                break;
+            }
+        }
+
+
+
+        // if (jumpscare==true)
+        // {
+        //     static bool soundPlayed = false;
+        //     if (!soundPlayed) {
+        //         scareOne.playSound();
+        //         fan.stopSound();
+        //         music.stop();
+        //         call.stop();
+        //         soundPlayed = true;
+        //     }
+        //     bonnieScare.runAnimation();
+        //     window.draw(bonnieScare.getSprite());
+        //     if (soundPlayed && scareOne.getStatus() == true) {
+        //         window.close();
+        //     }
+        // }
         if (call.getStatus()==sf::Music::Stopped && !ambiencePlaying)
         {
             music.play();

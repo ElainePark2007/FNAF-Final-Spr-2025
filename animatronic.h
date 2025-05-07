@@ -7,9 +7,8 @@
 #ifndef ANIMATRONIC_H
 #define ANIMATRONIC_H
 #include <iostream>
-#include <thread>
+#include "room.h"
 
-using namespace std::chrono;
 
 
 
@@ -17,20 +16,21 @@ using namespace std::chrono;
 class Animatronic {
 
 public:
-    Animatronic(int ai);
+    Animatronic(int ai, Room &location);
     int const getAiLevel();
-    std::string const getLocation();
+    Room* const getLocation();
 
     void setAiLevel(int ai);
-    void setLocation(std::string location);
+    void setLocation(Room location);
 
     void aiIncrease();
-    void movementOpportunity();
-    void moveRooms();
+    bool movementOpportunity(bool &jumpscare);
+    bool moveRooms(bool &jumpscare);
 
 private:
     int mAiLevel;
-    std::string mLocation;
+    Room* mLocation;
+
 
     
 };
