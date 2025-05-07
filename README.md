@@ -1,6 +1,6 @@
 # Final Project: Five Nights at Freddy's
 
-Try your luck surviving the night shift at Freddy Fazbear's Pizzeria with this project. Monitor the roaming animatronics by pressing 'C'. Checking the cameras when they're right outside (Cameras 2B and 4B) scares them off, but don't lose them in the rooms, or else!
+Try your luck surviving the night shift at Freddy Fazbear's Pizzeria with this project. Monitor the roaming animatronics by pressing 'C'. Checking the cameras when they're right outside (Cameras 2B and 4B) and keeoing an eye on Foxy (Camera 1C) scares them off, but don't lose them in the rooms, or else!
 
 
 ![FNAFex1](https://github.com/user-attachments/assets/623dcd3c-8f4e-49e2-a9d9-1ff3667a6f4c)
