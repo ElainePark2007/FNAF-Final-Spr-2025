@@ -86,11 +86,11 @@ int main()
     //set initial call and ambience to follow
     bool ambiencePlaying = false;
     sf::Music music;
-    if (!music.openFromFile("musicFiles/Ambience 2.mp3"))
+    if (!music.openFromFile("musicFiles/Ambience 2.wav"))
     {
     }
     sf::Music call;
-    if (!call.openFromFile("musicFiles/Voiceover1c.mp3"))
+    if (!call.openFromFile("musicFiles/Voiceover1c.wav"))
     {
     }
     call.setPosition(0, 1, 10); // change its 3D position
@@ -112,14 +112,14 @@ int main()
     Sound camOn;
     Sound fan;
     //load sounds
-    camOff.loadSound("soundFiles/Put Down.mp3");
-    windowScare.loadSound("soundFiles/Windowscare.mp3");
-    knock.loadSound("soundFiles/Knock2.mp3");
-    camSwitch.loadSound("soundFiles/Blip3.mp3");
-    scareOne.loadSound("soundFiles/Xscream.mp3");
-    scareTwo.loadSound("soundFiles/Xscream2.mp3");
-    camOn.loadSound("soundFiles/Camera Video Load.mp3");
-    fan.loadSound("soundFiles/Buzz Fan Florescent2.mp3");
+    camOff.loadSound("soundFiles/Put Down.wav");
+    windowScare.loadSound("soundFiles/Windowscare.wav");
+    knock.loadSound("soundFiles/Knock2.wav");
+    camSwitch.loadSound("soundFiles/Blip3.wav");
+    scareOne.loadSound("soundFiles/Xscream.wav");
+    scareTwo.loadSound("soundFiles/Xscream2.wav");
+    camOn.loadSound("soundFiles/Camera Video Load.wav");
+    fan.loadSound("soundFiles/Buzz Fan Florescent2.wav");
     fan.volume(5);
     fan.loop();
     fan.playSound();
@@ -253,6 +253,8 @@ int main()
             {
                 window.draw(cameraButtons[i]);
             }
+        } else {
+            
         }
         float i = elapsed;
         if (elapsed >= 35.f && !bonnieScareTriggered)
