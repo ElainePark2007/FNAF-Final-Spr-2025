@@ -13,9 +13,29 @@ Office::Office(std::string textureName, std::string name, int defaultFrame)
     }
     mStateShown.setTexture(mDefaultState);
     mRoomName=name;
+    leftLight=false;
+    rightLight=false;
 }
 
 sf::Sprite Office::getRoomPicture()
 {
     return mStateShown;
+}
+
+void Office::turnLeftLightOn()
+{
+    leftLight=true;
+    if(rightLight) {
+        rightLight=false;
+    }
+    mStateShown.setTexture(leftLightOn);
+}
+
+void Office::turnRightLightOn()
+{
+    rightLight=true;
+    if(leftLight) {
+        leftLight=false;
+    }
+    mStateShown.setTexture(rightLightOn);
 }

@@ -9,8 +9,8 @@
 
 Room::Room(std::string textureName, std::string name, int defaultFrame, int animatronicFrame)
 {
-    sf::IntRect defaultTexture(0, 2*(defaultFrame+1)+720*(defaultFrame-1), 1600, 720);
-    sf::IntRect animatronicTexture(0, 2*(animatronicFrame+1)+720*(animatronicFrame-1), 1600, 720);
+    sf::IntRect defaultTexture(0, 2*(defaultFrame)+720*(defaultFrame-1), 1600, 720);
+    sf::IntRect animatronicTexture(0, 2*(animatronicFrame)+720*(animatronicFrame-1), 1600, 720);
 
     if(!mDefaultState.loadFromFile(textureName, defaultTexture) || !mAnimatronicState.loadFromFile(textureName,animatronicTexture)) {
         std::cerr<<"Error loading texture\n";
