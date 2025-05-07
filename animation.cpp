@@ -39,6 +39,39 @@ void Animation::runAnimation()
         mClock.restart();
     }
 }
+/**
+ * @brief combined with start once it plays the animation cycle one time, only used for Foxy
+ * 
+ */
+void Animation::runAnimationOnce()
+{
+    if (!isPlaying)
+        return;
+
+    if (mClock.getElapsedTime().asMilliseconds() > 30) {
+        mAnimatronic.setTextureRect(sf::IntRect(0, 2*(currentFrame+1)+height*currentFrame, width, height));
+        currentFrame++;
+        framesPlayed++;
+        mClock.restart();
+
+        if (framesPlayed >= numFrames) {
+            isPlaying = false;
+            currentFrame = 0;
+            framesPlayed = 0;
+        }
+    }
+}
+
+void Animation::startOnce()
+{
+    if (!isPlaying) {
+        isPlaying = true;
+        currentFrame = 0;
+        framesPlayed = 0;
+        mClock.restart();
+    }
+}
+
 
 /**
  * @brief Returns current state of sprite (used for actually printing to window)

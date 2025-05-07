@@ -18,6 +18,7 @@ int main()
     bool bonnieOffice=false, foxyOffice=false, chicaOffice=false, freddyOffice=false;
     bool jumpscare = false;
     bool gameOver=false;
+    bool staticPlayed=false;
     sf::Clock clock;
     Animation bonnieScare("Animations/bonnieAnimation (w1600, f11).png", 11, 1600);
     Animation freddyScare("Animations/freddyAnimation (w1600, f22).png", 22, 1600);
@@ -132,6 +133,10 @@ int main()
     Sound scareTwo;
     Sound camOn;
     Sound fan;
+    Sound door;
+    Sound laughOne;
+    Sound endStatic;
+    Sound win;
     //load sounds
     camOff.loadSound("soundFiles/Put Down.wav");
     windowScare.loadSound("soundFiles/Windowscare.wav");
@@ -141,10 +146,19 @@ int main()
     scareTwo.loadSound("soundFiles/Xscream2.wav");
     camOn.loadSound("soundFiles/Camera Video Load.wav");
     fan.loadSound("soundFiles/Buzz Fan Florescent2.wav");
+    door.loadSound("soundFiles/Door.wav");
+    laughOne.loadSound("soundFiles/Laugh1.wav");
+    endStatic.loadSound("soundFiles/Static.wav");
+    win.loadSound("soundFiles/Win.wav");
+    
     camOff.volume(5);
     camOn.volume(5);
     camSwitch.volume(5);
     scareOne.volume(5);
+    door.volume(5);
+    laughOne.volume(5);
+    endStatic.volume(5);
+    win.volume(5);
     scareTwo.volume(5);
     knock.volume(5);
     windowScare.volume(5);
@@ -161,6 +175,7 @@ int main()
     introSprite.setTexture(intro);
     
     sf::Clock gameStarted;
+    sf::Clock jumpNoise;
     while (window.isOpen())
     {
         
@@ -227,7 +242,8 @@ int main()
         }
         float i = elapsed;
 
-        if(foxyClock.getElapsedTime().asSeconds()>=15) {
+        if(foxyClock.getElapsedTime().asSeconds()>=30)// time until foxy scares
+        {
             cameraOpen=false;
             jumpscare=true;
             foxyScareTriggered=true;
@@ -264,10 +280,21 @@ int main()
                     call.stop();
                     soundPlayed = true;
                 }
+                static bool foxyOnce=true;
+                if (foxyOnce) {
+                    foxyScare.startOnce(); 
+                    foxyOnce = false;          
+                }
+                
+                foxyScare.runAnimationOnce();
                 window.clear();
-                foxyScare.runAnimation();
+                // foxyScare.runAnimation();
                 window.draw(foxyScare.getSprite());
                 window.display();
+                if (jumpNoise.getElapsedTime().asSeconds() >=2) //number is how many seconds jumpscare lasts
+                {
+                    scareOne.stopSound();
+                }
                 if (soundPlayed && scareOne.getStatus() == true) {
                     sf::Clock ending;
                     while(ending.getElapsedTime().asSeconds()<3)
@@ -276,6 +303,11 @@ int main()
                         endingScreen.runAnimation();
                         window.draw(endingScreen.getSprite());
                         window.display();
+                        if (!staticPlayed)
+                        {
+                            endStatic.playSound();
+                            staticPlayed=true;
+                        }
                     }
                     window.close();
                     break;
@@ -287,7 +319,7 @@ int main()
                 static bool soundPlayed = false;
                 
                 if (!soundPlayed) {
-                    scareOne.playSound();
+                    scareTwo.playSound();
                     fan.stopSound();
                     music.stop();
                     call.stop();
@@ -297,7 +329,11 @@ int main()
                 bonnieScare.runAnimation();
                 window.draw(bonnieScare.getSprite());
                 window.display();
-                if (soundPlayed && scareOne.getStatus() == true) {
+                if (jumpNoise.getElapsedTime().asSeconds() >=3)
+                {
+                    scareTwo.stopSound();
+                }
+                if (soundPlayed && scareTwo.getStatus() == true) {
                     sf::Clock ending;
                     while(ending.getElapsedTime().asSeconds()<3)
                     {
@@ -305,6 +341,11 @@ int main()
                         endingScreen.runAnimation();
                         window.draw(endingScreen.getSprite());
                         window.display();
+                        if (!staticPlayed)
+                        {
+                            endStatic.playSound();
+                            staticPlayed=true;
+                        }
                     }
                     window.close();
                     break;
@@ -316,7 +357,7 @@ int main()
                 static bool soundPlayed = false;
                 
                 if (!soundPlayed) {
-                    scareOne.playSound();
+                    scareTwo.playSound();
                     fan.stopSound();
                     music.stop();
                     call.stop();
@@ -326,7 +367,11 @@ int main()
                 freddyScare.runAnimation();
                 window.draw(freddyScare.getSprite());
                 window.display();
-                if (soundPlayed && scareOne.getStatus() == true) {
+                if (jumpNoise.getElapsedTime().asSeconds() >=3)
+                {
+                    scareTwo.stopSound();
+                }
+                if (soundPlayed && scareTwo.getStatus() == true) {
                     sf::Clock ending;
                     while(ending.getElapsedTime().asSeconds()<3)
                     {
@@ -334,6 +379,11 @@ int main()
                         endingScreen.runAnimation();
                         window.draw(endingScreen.getSprite());
                         window.display();
+                        if (!staticPlayed)
+                        {
+                            endStatic.playSound();
+                            staticPlayed=true;
+                        }
                     }
                     window.close();
                     break;
@@ -345,7 +395,7 @@ int main()
                 static bool soundPlayed = false;
                 
                 if (!soundPlayed) {
-                    scareOne.playSound();
+                    scareTwo.playSound();
                     fan.stopSound();
                     music.stop();
                     call.stop();
@@ -355,7 +405,11 @@ int main()
                 chicaScare.runAnimation();
                 window.draw(chicaScare.getSprite());
                 window.display();
-                if (soundPlayed && scareOne.getStatus() == true) {
+                if (jumpNoise.getElapsedTime().asSeconds() >=3)
+                {
+                    scareTwo.stopSound();
+                }
+                if (soundPlayed && scareTwo.getStatus() == true) {
                     sf::Clock ending;
                     while(ending.getElapsedTime().asSeconds()<3)
                     {
@@ -363,19 +417,31 @@ int main()
                         endingScreen.runAnimation();
                         window.draw(endingScreen.getSprite());
                         window.display();
+                        if (!staticPlayed)
+                        {
+                            endStatic.playSound();
+                            staticPlayed=true;
+                        }
                     }
                     window.close();
                     break;
                 }
             }
         }
-        
+
         if (call.getStatus()==sf::Music::Stopped && !ambiencePlaying)
         {
             music.play();
             ambiencePlaying=true;
         }
+
+        if (gameStarted.getElapsedTime().asSeconds()>535)
+        {
+            window.close();
+        }
+
         window.display();
+        jumpNoise.restart();
     }
     return 0;
 
