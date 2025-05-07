@@ -21,7 +21,7 @@ public:
     Room* const getLocation();
 
     void setAiLevel(int ai);
-    void setLocation(Room location);
+    void setLocation(Room &location);
 
     void aiIncrease();
     bool movementOpportunity(bool &jumpscare);
