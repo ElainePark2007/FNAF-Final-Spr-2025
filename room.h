@@ -1,6 +1,6 @@
 /**
  * @file room.h
- * @author Matteo Coppola
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
  * @brief Room class declaration file
  * @date 2025-05-06
  */

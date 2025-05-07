@@ -1,3 +1,9 @@
+/**
+ * @file button.h
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
+ * @brief Button class declaration file
+ * @date 2025-05-07
+ */
 #ifndef BUTTON_H
 #define BUTTON_H
 #include <SFML/Graphics.hpp>

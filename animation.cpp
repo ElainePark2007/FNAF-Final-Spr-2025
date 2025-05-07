@@ -1,6 +1,6 @@
 /**
  * @file animation.cpp
- * @author Matteo Coppola
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
  * @brief Animation class definition file
  * @date 2025-05-05
  */
@@ -62,6 +62,10 @@ void Animation::runAnimationOnce()
     }
 }
 
+/**
+ * @brief Initializes runAnimationOnce() function
+ * 
+ */
 void Animation::startOnce()
 {
     if (!isPlaying) {

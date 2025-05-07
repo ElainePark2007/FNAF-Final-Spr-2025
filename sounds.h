@@ -1,3 +1,9 @@
+/**
+ * @file sounds.h
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
+ * @brief Sound class declaration file
+ * @date 2025-05-07
+ */
 #ifndef SOUNDS_H
 #define SOUNDS_H
 #include <string>

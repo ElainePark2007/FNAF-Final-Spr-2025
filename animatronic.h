@@ -1,6 +1,6 @@
 /**
  * @file animatronic.h
- * @author Matteo Coppola
+ * @author Matteo Coppola, Luke Kellner, Elaine Park
  * @brief Animatronic class declaration file
  * @date 2025-05-06
  */
