@@ -18,11 +18,24 @@ int main()
     //Animatronic bonnie(3);
     //Animatronic chica(3);
     //Animatronic foxy(2);
-    bool bonnieScareTriggered = false;
+    bool bonnieScareTriggered = false, foxyScareTriggered=false, chicaScareTriggered=false, freddyScareTriggered=false;
     bool jumpscare = false;
     bool gameOver=false;
     sf::Clock clock;
     Animation bonnieScare("Animations/bonnieAnimation (w1600, f11).png", 11, 1600);
+    Animation freddyScare("Animations/freddyAnimation (w1600, f22).png", 22, 1600);
+    Animation chicaScare("Animations/chicaAnimation (w1600, f16).png", 16, 1600);
+    Animation foxyScare("Animations/foxyAnimation (w1600, f21).png", 21, 1600);
+    Animation endingScreen("Animations/endingScreen (w1600, f8).png", 8, 1600);
+
+    Animatronic foxy(0);
+    Animatronic freddy(3);
+    Animatronic bonnie(3);
+    Animatronic chica(3);
+    sf::Clock foxyClock;
+    sf::Clock freddyClock;
+    sf::Clock bonnieClock;
+    sf::Clock chicaClock;
 
     
 
@@ -60,24 +73,18 @@ int main()
     allRooms.push_back(room9);
     allRooms.push_back(room10);
     allRooms.push_back(room11);
-
-   
-
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 373), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1303, 429), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1197, 456), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1271, 507), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1239, 605), sf::Vector2f(53, 32), sf::Color::Transparent));
-
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 623), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1323, 663), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1535, 457), sf::Vector2f(53, 32), sf::Color::Transparent));
-    //kitchen stuff
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 624), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1429, 664), sf::Vector2f(53, 32), sf::Color::Transparent));
     cameraButtons.push_back(Button ("", sf::Vector2f(1526, 588), sf::Vector2f(53, 32), sf::Color::Transparent));
     
-
     bool cameraOpen=false;
     bool mouseInButton;
     int currentRoom=0;
@@ -262,6 +269,9 @@ int main()
                 
                     if(mouseInButton) {
                         currentRoom=i;
+                        if(i=4) {
+                            foxyClock.restart();
+                        }
                         camSwitch.playSound();
                     }
                 }
@@ -277,6 +287,37 @@ int main()
         //     cameraOpen=false;
         //     bonnieScareTriggered=true;
         // }
+        if(foxyClock.getElapsedTime().asSeconds()>=15) {
+            //jumpscare=true;
+            cameraOpen=false;
+            foxyScareTriggered=true;
+        }
+
+        if (foxyScareTriggered)
+        {
+            static bool soundPlayed = false;
+            
+            if (!soundPlayed) {
+                scareOne.playSound();
+                fan.stopSound();
+                music.stop();
+                call.stop();
+                soundPlayed = true;
+            }
+            foxyScare.runAnimation();
+            window.draw(foxyScare.getSprite());
+            if (soundPlayed && scareOne.getStatus() == true) {
+                sf::Clock ending;
+                while(ending.getElapsedTime().asSeconds()<3)
+                {
+                    window.clear();
+                    endingScreen.runAnimation();
+                    window.draw(endingScreen.getSprite());
+                    window.display();
+                }
+                window.close();
+            }
+        }
         if (jumpscare==true)
         {
             static bool soundPlayed = false;
