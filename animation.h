@@ -15,10 +15,14 @@ class Animation {
 public:
     Animation(std::string animationFile, int frameCount, int frameWidth);
     void runAnimation();
+    void runAnimationOnce();
+    void startOnce();
     sf::Sprite getSprite();
 
 private:
     int currentFrame, numFrames, width, height, offset;
+    bool isPlaying = false;
+    int framesPlayed;
     sf::Texture mAnimationTexture;
     sf::Sprite mAnimatronic;
     sf::Clock mClock;
